@@ -1,0 +1,30 @@
+<template>
+  <el-breadcrumb separator="/">
+      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
+    </el-breadcrumb>
+</template>
+
+<script>
+  export default {
+  name: 'Breadcrumb',
+  data() {
+    return {
+    
+    }
+  },
+  //生命周期 - 创建完成（访问当前this实例）
+  created() {
+  
+  },
+  //生命周期 - 挂载完成（访问DOM元素）
+  mounted() {
+  
+  }
+}
+</script>
+<style scoped>
+/* @import url(); 引入css类 */
+
+</style>
