@@ -1,7 +1,11 @@
 <template>
   <div>
     <!-- 面包屑 -->
-    <breadcrumb></breadcrumb>
+    <breadcrumb>
+      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
+    </breadcrumb>
 
     <!-- 卡片区域 -->
     <user-card></user-card>
@@ -9,7 +13,7 @@
 </template>
 
 <script>
-import Breadcrumb from '../../components/content/Breadcrumb.vue'
+import Breadcrumb from 'components/content/Breadcrumb.vue'
 import UserCard from './childC/UserCard.vue'
 export default {
   components: { Breadcrumb, UserCard },

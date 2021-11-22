@@ -26,8 +26,8 @@
         <template slot-scope="scope">
           <el-button icon="el-icon-edit" type="primary" circle @click="editUserS(scope.row.id)"></el-button>
           <el-button icon="el-icon-delete" type="danger" circle @click="delUserS(scope.row.id)"></el-button>
-          <el-tooltip effect="dark" content="设置" placement="top" :enterable="false">
-            <el-button icon="el-icon-setting" type="warning" circle></el-button>
+          <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
+            <el-button icon="el-icon-setting" type="warning" circle @click="setRoles(scope.row)"></el-button>
           </el-tooltip>
         </template>
       </el-table-column>
@@ -63,11 +63,29 @@
         <el-button type="primary" @click="editUserC">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 分配用户角色对话框 -->
+    <el-dialog title="分配用户角色" :visible.sync="RolesdialogVisible" width="30%">
+      <div>
+        <p>用户名: {{ userInfo.username }}</p>
+        <p>角色: {{ userInfo.role_name }}</p>
+        <p>
+          分配新角色:
+          <el-select v-model="selectRoleId" placeholder="请选择">
+            <el-option v-for="item in rolesList" :key="item.id" :label="item.roleName" :value="item.id"> </el-option>
+          </el-select>
+        </p>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="RolesdialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="setRolesById">确 定</el-button>
+      </span>
+    </el-dialog>
   </el-card>
 </template>
 
 <script>
 import { getUsersList, changeUserStatus, getUserPro, editUserPro, delUserReq } from 'network/users'
+import { _getRolesList, _allotUserRolesReq } from 'network/roles.js'
 import { userAddFormRulesMixin } from 'common/mixin'
 import AddUser from './AddUser.vue'
 
@@ -88,7 +106,12 @@ export default {
       total: 0,
       dialogVisible: false,
       editdialogVisible: false,
+      RolesdialogVisible: false,
       EditForm: {},
+      //要分配角色的用户信息
+      userInfo: {},
+      rolesList: [],
+      selectRoleId: '',
     }
   },
   //生命周期 - 创建完成（访问当前this实例）
@@ -184,14 +207,11 @@ export default {
         type: 'warning',
       })
         .then(() => {
-
-          
-          delUserReq(id).then(res => {
-            if(res.meta.status !== 200) this.$message.error('删除失败')
+          delUserReq(id).then((res) => {
+            if (res.meta.status !== 200) this.$message.error('删除失败')
 
             this.$message.success('删除成功')
             this.getUsersList()
-            
           })
           // this.$message({
           //   type: 'success',
@@ -204,6 +224,27 @@ export default {
             message: '已取消删除',
           })
         })
+    },
+    //点击分配用户角色
+    setRoles(userInfo) {
+      this.selectRoleId = ''
+
+      this.userInfo = userInfo
+      _getRolesList().then((res) => {
+        if (res.meta.status !== 200) this.$message.error('获取角色列表失败')
+        this.rolesList = res.data
+      })
+      this.RolesdialogVisible = true
+    },
+    //点击提交分配用户角色
+    setRolesById() {
+      console.log(this.selectRoleId)
+      _allotUserRolesReq(this.userInfo.id, this.selectRoleId).then((res) => {
+        if (res.meta.status !== 200) this.$message.error('用户角色设置失败')
+        this.$message.success('用户角色设置成功')
+        this.getUsersList()
+        this.RolesdialogVisible = false
+      })
     },
   },
 
