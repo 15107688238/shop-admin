@@ -6,6 +6,12 @@ export function _getRolesList() {
   })
 }
 
+export function _getRole(id) {
+  return request({
+    url: 'roles/'+ id
+  })
+}
+
 export function _delRoles(role, id) {
   return request({
     method: 'delete',
@@ -33,3 +39,26 @@ export function _allotUserRolesReq(id, rid) {
   })
 }
 
+export function _addRolesReq(data) {
+  return request({
+    method: 'post',
+    url: 'roles',
+    data
+  })
+}
+
+export function _editRoleReq(id,data) {
+  return request({
+    method: 'put',
+    url: 'roles/' +id,
+    data
+    
+  })
+}
+
+export function _delRole(id) {
+  return request({
+    method: 'delete',
+    url: `roles/${id}`
+  })
+}
