@@ -56,7 +56,7 @@ export default {
         // console.log(res)
         if(res.meta.status !== 200) return this.$message.error(res.meta.msg)
         this.menusList = res.data
-        // console.log(this.menusList)
+        // console.log('menus', this.menusList)
 
 
       })

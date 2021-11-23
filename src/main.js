@@ -5,9 +5,10 @@ import router from './router'
 import 'assets/css/base.css'
 import './assets/fonts/iconfont.css'
 import './plugins/element'
+import TreeTable from 'vue-table-with-tree-grid'
 
 Vue.config.productionTip = false
-
+Vue.component('tree-table', TreeTable);
 new Vue({
   router,
   render: h => h(App)

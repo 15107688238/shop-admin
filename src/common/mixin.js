@@ -108,7 +108,7 @@ export const paramsFormRulesMixin = {
     return {
       // 添加表单的验证规则
       addFormRules: {
-        attr_name: [
+        cat_name: [
           { required: true, message: '请输入添加的分类', trigger: 'blur' },
           { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
         ]
