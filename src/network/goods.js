@@ -50,3 +50,17 @@ export function _editAttribute(id, attrId, data) {
 
   })
 }
+
+export function _getGoodsList(params) {
+  return request({
+    url: 'goods',
+    params
+  })
+}
+export function _addGoods(data) {
+  return request({
+    method: 'post',
+    url: 'goods',
+    data
+  })
+}
